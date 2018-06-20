@@ -13,6 +13,7 @@
 */
 
 #include <iostream>
+#include <time.h>
 
 using std::cout;
 using std::endl;
@@ -125,7 +126,13 @@ int main()
 							0,0,1, 0,0,0, 0,6,8,
 							0,0,8, 5,0,0, 0,1,0,
 							0,9,0, 0,0,0, 4,0,0, };
+
+
 	print(input);
+	clock_t t;
+	t = clock();
 	backtracking(input, 0);
+	t = clock() - t;
+	cout << "time = " << ((float)t)/CLOCKS_PER_SEC << seconds << endl;
 	print(input);
 }
