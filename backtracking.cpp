@@ -21,11 +21,10 @@ using std::endl;
 const int SIZE = 81;
 const int ROW_COL = 9;
 
-void print(int* input)
-{
+void print(int* input) {
 	cout << endl;
 	cout << "--------------------------" << endl;
-	for(int index = 0; index < SIZE; index++){
+	for(int index = 0; index < SIZE; index++) {
 		if(index % ROW_COL == 0 && index != 0)
 			cout << endl;
 		if(index % (ROW_COL*3) == 0 && index != 0)
@@ -35,14 +34,13 @@ void print(int* input)
 	cout << endl;
 }
 
-bool check(int* input,int position){
+bool check(int* input,int position) {
 
 	//Check row & col at the same time
 	int col = position % ROW_COL;
 	int row = position - col;
 	int count = 0;
-	for(int i=0; i<ROW_COL ;col += 9, row++, i++)
-	{
+	for(int i=0; i<ROW_COL ;col += 9, row++, i++) {
 		if(input[col] == input[position])
 			count++;
 		if(input[row] == input[position])
@@ -53,30 +51,28 @@ bool check(int* input,int position){
 
 	//Check for 3x3 square
 	int temp_position = position;
-	while(true)
-	{
+	while(true) {
 		col = temp_position % ROW_COL;
-		if(col % 3 == 0 )
+		if(col % 3 == 0 ) {
 			break;
-		else
+		} else {
 			--temp_position;
+		}
 	}
 
-	while(true)
-	{
+	while(true) {
 		if(position >= col && position < (col+27) )
 			break;
-		else
+		} else {
 			col = col + 27;
+		}
 	}
 
 	int pos = col;
 	count = 0;
-	for(int i=0; i<3; i++) // 3 times
-	{
+	for(int i=0; i<3; i++) // 3 times {
 		--pos;
-		for(int j=0; j<3; j++) // 3 times
-		{
+		for(int j=0; j<3; j++) // 3 times {
 			pos = pos+1;
 			if(input[pos] == input[position])
 				count++;
@@ -89,43 +85,39 @@ bool check(int* input,int position){
 	return true;
 }
 
-bool backtracking(int* input, int position)
-{
+bool backtracking(int* input, int position) {
 	if( position == SIZE)
 		return true;
 
-	if(input[position] == 0)
-	{
-		while( input[position] != 9 )
-		{
+	if(input[position] == 0) {
+		while( input[position] != 9 ) {
 			input[position] += 1;
 			if( !check(input, position) )
 				continue;
 			if( backtracking(input, position + 1) )
 				return true;
 		}
-	}
-	else
+	} else {
 		return backtracking(input, position + 1);
+	}
 
 	input[position] = 0;
 	return false;
 }
 
-int main()
-{
+int main() {
 	// A soduko unsolved
-	int input[SIZE] = {		8,0,0, 0,0,0, 0,0,0,
-							0,0,3, 6,0,0, 0,0,0,
-							0,7,0, 0,9,0, 2,0,0,
+	int input[SIZE] = {	8,0,0, 0,0,0, 0,0,0,
+				0,0,3, 6,0,0, 0,0,0,
+				0,7,0, 0,9,0, 2,0,0,
 
-							0,5,0, 0,0,7, 0,0,0,
-							0,0,0, 0,4,5, 7,0,0,
-							0,0,0, 1,0,0, 0,3,0,
+				0,5,0, 0,0,7, 0,0,0,
+				0,0,0, 0,4,5, 7,0,0,
+				0,0,0, 1,0,0, 0,3,0,
 
-							0,0,1, 0,0,0, 0,6,8,
-							0,0,8, 5,0,0, 0,1,0,
-							0,9,0, 0,0,0, 4,0,0, };
+				0,0,1, 0,0,0, 0,6,8,
+				0,0,8, 5,0,0, 0,1,0,
+				0,9,0, 0,0,0, 4,0,0 };
 
 
 	print(input);
